@@ -84,57 +84,6 @@ service_template:
         position_yCoord: '880'
       capabilities:
         provides_data: {}
-    image_config:
-      type: cna-modeling.entities.BackingData
-      metadata:
-        label: Image Config
-        fontSize: '14'
-        size_width: '95'
-        size_height: '30'
-        position_xCoord: '820'
-        position_yCoord: '610'
-      capabilities:
-        provides_data: {}
-      properties:
-        kind: config
-        included_data:
-          servicePort: '8080'
-          registryURL: teastore-registry
-          host: teastore-image
-    recommender_config:
-      type: cna-modeling.entities.BackingData
-      metadata:
-        label: Recommender Config
-        fontSize: '14'
-        size_width: '95'
-        size_height: '30'
-        position_xCoord: '1060'
-        position_yCoord: '910'
-      capabilities:
-        provides_data: {}
-      properties:
-        kind: config
-        included_data:
-          servicePort: '8080'
-          registryURL: teastore-registry
-          host: teastore-recommender
-    auth_config:
-      type: cna-modeling.entities.BackingData
-      metadata:
-        label: Auth Config
-        fontSize: '14'
-        size_width: '95'
-        size_height: '30'
-        position_xCoord: '510'
-        position_yCoord: '930'
-      capabilities:
-        provides_data: {}
-      properties:
-        kind: config
-        included_data:
-          servicePort: '8080'
-          registryURL: teastore-registry
-          host: teastore-auth
     webui_config:
       type: cna-modeling.entities.BackingData
       metadata:
@@ -142,8 +91,8 @@ service_template:
         fontSize: '14'
         size_width: '95'
         size_height: '30'
-        position_xCoord: '350'
-        position_yCoord: '390'
+        position_xCoord: '820'
+        position_yCoord: '1280'
       capabilities:
         provides_data: {}
       properties:
@@ -152,23 +101,23 @@ service_template:
           servicePort: '8080'
           registryURL: teastore-registry
           host: teastore-webui
-    db_secrets:
+    image_config:
       type: cna-modeling.entities.BackingData
       metadata:
-        label: DB secrets
+        label: Image Config
         fontSize: '14'
         size_width: '95'
         size_height: '30'
-        position_xCoord: '1420'
-        position_yCoord: '1060'
+        position_xCoord: '930'
+        position_yCoord: '1280'
       capabilities:
         provides_data: {}
       properties:
-        kind: secret
+        kind: config
         included_data:
-          MYSQL_ROOT_PASSWORD: rootpassword
-          user: teauser
-          password: teapassword
+          servicePort: '8080'
+          registryURL: teastore-registry
+          host: teastore-image
     persistence_config:
       type: cna-modeling.entities.BackingData
       metadata:
@@ -186,6 +135,57 @@ service_template:
           servicePort: '8080'
           registryURL: teastore-registry
           host: teastore-persistence
+    auth_config:
+      type: cna-modeling.entities.BackingData
+      metadata:
+        label: Auth Config
+        fontSize: '14'
+        size_width: '95'
+        size_height: '30'
+        position_xCoord: '1140'
+        position_yCoord: '1280'
+      capabilities:
+        provides_data: {}
+      properties:
+        kind: config
+        included_data:
+          servicePort: '8080'
+          registryURL: teastore-registry
+          host: teastore-auth
+    recommender_config:
+      type: cna-modeling.entities.BackingData
+      metadata:
+        label: Recommender Config
+        fontSize: '14'
+        size_width: '95'
+        size_height: '30'
+        position_xCoord: '1250'
+        position_yCoord: '1280'
+      capabilities:
+        provides_data: {}
+      properties:
+        kind: config
+        included_data:
+          servicePort: '8080'
+          registryURL: teastore-registry
+          host: teastore-recommender
+    db_secrets:
+      type: cna-modeling.entities.BackingData
+      metadata:
+        label: DB secrets
+        fontSize: '14'
+        size_width: '95'
+        size_height: '30'
+        position_xCoord: '1420'
+        position_yCoord: '1060'
+      capabilities:
+        provides_data: {}
+      properties:
+        kind: secret
+        included_data:
+          MYSQL_ROOT_PASSWORD: rootpassword
+          user: teauser
+          password: teapassword
     db_credentials:
       type: cna-modeling.entities.BackingData
       metadata:
@@ -1264,7 +1264,8 @@ service_template:
         software_type: custom
         stateless: true
         load_shedding: false
-        identities: {}
+        identities:
+          teauser: account
         namespace: teastore-namespace
       artifacts:
         persistence service war:
@@ -1580,13 +1581,15 @@ service_template:
         method_name: ''
         protocol: tcp
         port: ''
-        supported_authentication_methods: []
+        supported_authentication_methods:
+          - basic_authentication
         url_path: ''
         rate_limiting: none
         idempotent: false
         readiness_check: false
         health_check: false
-        allow_access_to: []
+        allow_access_to:
+          - teauser
         documented_by: []
       capabilities:
         endpoint:
@@ -1610,13 +1613,15 @@ service_template:
         method_name: ''
         protocol: tcp
         port: ''
-        supported_authentication_methods: []
+        supported_authentication_methods:
+          - basic_authentication
         url_path: ''
         rate_limiting: none
         idempotent: false
         readiness_check: false
         health_check: false
-        allow_access_to: []
+        allow_access_to:
+          - teauser
         documented_by: []
       capabilities:
         endpoint:
@@ -2095,6 +2100,7 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2124,6 +2130,8 @@ service_template:
         idempotent: false
         readiness_check: false
         health_check: false
+        allow_access_to:
+          - external account
         documented_by: []
       capabilities:
         endpoint:
@@ -2153,6 +2161,7 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2181,6 +2190,8 @@ service_template:
         idempotent: false
         readiness_check: false
         health_check: false
+        allow_access_to:
+          - external account
         documented_by: []
       capabilities:
         endpoint:
@@ -2209,6 +2220,8 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to:
+          - external account
         documented_by: []
       capabilities:
         endpoint:
@@ -2238,6 +2251,8 @@ service_template:
         idempotent: false
         readiness_check: false
         health_check: false
+        allow_access_to:
+          - external account
         documented_by: []
       capabilities:
         endpoint:
@@ -2268,6 +2283,8 @@ service_template:
         idempotent: false
         readiness_check: false
         health_check: false
+        allow_access_to:
+          - external account
         documented_by: []
       capabilities:
         endpoint:
@@ -2297,6 +2314,7 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2328,6 +2346,7 @@ service_template:
         idempotent: false
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2354,12 +2373,15 @@ service_template:
         method_name: POST
         protocol: HTTP
         port: ''
-        supported_authentication_methods: []
+        supported_authentication_methods:
+          - basic_authentication
         url_path: /loginAction
         rate_limiting: none
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to:
+          - external account
         documented_by: []
       capabilities:
         endpoint:
@@ -2388,6 +2410,7 @@ service_template:
         idempotent: false
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2417,6 +2440,7 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2445,6 +2469,7 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2473,6 +2498,7 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2503,6 +2529,7 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to: []
         documented_by: []
       capabilities:
         endpoint:
@@ -2533,6 +2560,8 @@ service_template:
         idempotent: true
         readiness_check: false
         health_check: false
+        allow_access_to:
+          - external account
         documented_by: []
       capabilities:
         endpoint:
@@ -3338,7 +3367,8 @@ service_template:
         size_height: '30'
         position_xCoord: '1140'
         position_yCoord: '1280'
-      properties: {}
+      properties:
+        usage_relation: usage
     aws_eks_cluster_uses_recommender_config:
       type: cna-modeling.relationships.AttachesTo.Data
       metadata:
@@ -3773,6 +3803,13 @@ service_template:
         timeout: 130000
         retries: 2
         circuit_breaker: none
+    imageprovider_linksTo_generatedb:
+      type: cna-modeling.relationships.ConnectsTo.Link
+      properties:
+        relation_type: ''
+        timeout: 130000
+        retries: 2
+        circuit_breaker: none
     recommender_linksTo_add_service_location:
       type: cna-modeling.relationships.ConnectsTo.Link
       properties:
@@ -3781,6 +3818,34 @@ service_template:
         retries: 2
         circuit_breaker: none
     recommender_linksTo_remove_service_location:
+      type: cna-modeling.relationships.ConnectsTo.Link
+      properties:
+        relation_type: ''
+        timeout: 130000
+        retries: 2
+        circuit_breaker: none
+    recommender_linksTo_generatedb:
+      type: cna-modeling.relationships.ConnectsTo.Link
+      properties:
+        relation_type: ''
+        timeout: 130000
+        retries: 2
+        circuit_breaker: none
+    auth_linksTo_create_order:
+      type: cna-modeling.relationships.ConnectsTo.Link
+      properties:
+        relation_type: ''
+        timeout: 130000
+        retries: 2
+        circuit_breaker: none
+    auth_linksTo_get_product:
+      type: cna-modeling.relationships.ConnectsTo.Link
+      properties:
+        relation_type: ''
+        timeout: 130000
+        retries: 2
+        circuit_breaker: none
+    auth_linksTo_get_user:
       type: cna-modeling.relationships.ConnectsTo.Link
       properties:
         relation_type: ''
@@ -3885,20 +3950,6 @@ service_template:
         timeout: 130000
         retries: 2
         circuit_breaker: none
-    auth_linksTo_create_order:
-      type: cna-modeling.relationships.ConnectsTo.Link
-      properties:
-        relation_type: ''
-        timeout: 130000
-        retries: 2
-        circuit_breaker: none
-    auth_linksTo_get_product:
-      type: cna-modeling.relationships.ConnectsTo.Link
-      properties:
-        relation_type: ''
-        timeout: 130000
-        retries: 2
-        circuit_breaker: none
     webui_linksTo_get_product:
       type: cna-modeling.relationships.ConnectsTo.Link
       properties:
@@ -3934,13 +3985,6 @@ service_template:
         timeout: 130000
         retries: 2
         circuit_breaker: none
-    recommender_linksTo_generatedb:
-      type: cna-modeling.relationships.ConnectsTo.Link
-      properties:
-        relation_type: ''
-        timeout: 130000
-        retries: 2
-        circuit_breaker: none
     webui_linksTo_generatedb:
       type: cna-modeling.relationships.ConnectsTo.Link
       properties:
@@ -3948,21 +3992,7 @@ service_template:
         timeout: 130000
         retries: 2
         circuit_breaker: none
-    imageprovider_linksTo_generatedb:
-      type: cna-modeling.relationships.ConnectsTo.Link
-      properties:
-        relation_type: ''
-        timeout: 130000
-        retries: 2
-        circuit_breaker: none
     webui_linksTo_get_products:
-      type: cna-modeling.relationships.ConnectsTo.Link
-      properties:
-        relation_type: ''
-        timeout: 130000
-        retries: 2
-        circuit_breaker: none
-    auth_linksTo_get_user:
       type: cna-modeling.relationships.ConnectsTo.Link
       properties:
         relation_type: ''
