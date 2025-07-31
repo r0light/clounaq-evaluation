@@ -280,31 +280,6 @@ service_template:
         end_ip: ''
         gateway_ip: ''
         network_type: ''
-    google_kubernetes_engine_cluster:
-      type: cna-modeling.entities.Infrastructure
-      metadata:
-        label: Google Kubernetes Engine Cluster
-        fontSize: '14'
-        size_width: '500'
-        size_height: '90'
-        position_xCoord: '390'
-        position_yCoord: '1880'
-      properties:
-        kind: software-platform
-        environment_access: limited
-        maintenance: automated
-        provisioning: transparent
-        supported_artifacts:
-          - Kubernetes.Resource
-          - Kubernetes.Resource.Service
-          - Kubernetes.Resource.Deployment
-        availability_zone: us-east1-b,us-east1-c
-        region: us-east1
-        supported_update_strategies: []
-        deployed_entities_scaling: automated-built-in
-        self_scaling: manual
-        enforced_resource_bounds: true
-        identities: {}
     google_compute_engine:
       type: cna-modeling.entities.Infrastructure
       metadata:
@@ -328,6 +303,38 @@ service_template:
         self_scaling: automated-built-in
         enforced_resource_bounds: false
         identities: {}
+    google_kubernetes_engine_cluster:
+      type: cna-modeling.entities.Infrastructure
+      metadata:
+        label: Google Kubernetes Engine Cluster
+        fontSize: '14'
+        size_width: '500'
+        size_height: '90'
+        position_xCoord: '390'
+        position_yCoord: '1880'
+      properties:
+        kind: software-platform
+        environment_access: limited
+        maintenance: automated
+        provisioning: transparent
+        supported_artifacts:
+          - Kubernetes.Resource
+          - Kubernetes.Resource.Service
+          - Kubernetes.Resource.Deployment
+        availability_zone: us-east1-b,us-east1-c
+        region: us-east1
+        supported_update_strategies:
+          - replace
+          - rolling
+          - blue-green
+        deployed_entities_scaling: automated-built-in
+        self_scaling: manual
+        enforced_resource_bounds: true
+        identities: {}
+      capabilities:
+        address_resolution:
+          properties:
+            address_resolution_kind: DNS
     policy_management_frontend:
       type: cna-modeling.entities.Component
       metadata:
@@ -926,7 +933,7 @@ service_template:
         position_xCoord: '130'
         position_yCoord: '1680'
       properties:
-        managed: false
+        managed: true
         software_type: custom
         stateless: true
         load_shedding: false
@@ -3645,56 +3652,6 @@ service_template:
         position_yCoord: '820'
       properties:
         usage_relation: persistence
-    google_kubernetes_engine_cluster_hosts_policy_management_frontend:
-      type: cna-modeling.relationships.HostedOn.DeploymentMapping
-      properties:
-        deployment: automated-declarative
-        deployment_unit: Kubernetes.Resource.Deployment
-        replicas: 1
-        update_strategy: replace
-        automated_restart_policy: onProcessFailure
-        assigned_account: default-account
-        resource_requirements: unstated
-    google_kubernetes_engine_cluster_hosts_policy_management_backend:
-      type: cna-modeling.relationships.HostedOn.DeploymentMapping
-      properties:
-        deployment: automated-declarative
-        deployment_unit: Kubernetes.Resource.Deployment
-        replicas: 1
-        update_strategy: replace
-        automated_restart_policy: onProcessFailure
-        assigned_account: default-account
-        resource_requirements: unstated
-    google_kubernetes_engine_cluster_hosts_risk_management_client:
-      type: cna-modeling.relationships.HostedOn.DeploymentMapping
-      properties:
-        deployment: automated-declarative
-        deployment_unit: Kubernetes.Resource.Deployment
-        replicas: 1
-        update_strategy: replace
-        automated_restart_policy: onProcessFailure
-        assigned_account: default-account
-        resource_requirements: unstated
-    google_kubernetes_engine_cluster_hosts_customer_management_backend:
-      type: cna-modeling.relationships.HostedOn.DeploymentMapping
-      properties:
-        deployment: automated-declarative
-        deployment_unit: Kubernetes.Resource.Deployment
-        replicas: 1
-        update_strategy: replace
-        automated_restart_policy: onProcessFailure
-        assigned_account: default-account
-        resource_requirements: unstated
-    google_kubernetes_engine_cluster_hosts_risk_management_server:
-      type: cna-modeling.relationships.HostedOn.DeploymentMapping
-      properties:
-        deployment: automated-declarative
-        deployment_unit: Kubernetes.Resource.Deployment
-        replicas: 1
-        update_strategy: replace
-        automated_restart_policy: onProcessFailure
-        assigned_account: default-account
-        resource_requirements: unstated
     google_compute_engine_hosts_network_load_balancer:
       type: cna-modeling.relationships.HostedOn.DeploymentMapping
       properties:
@@ -3705,27 +3662,7 @@ service_template:
         automated_restart_policy: onProcessFailure
         assigned_account: default-account
         resource_requirements: unstated
-    google_kubernetes_engine_cluster_hosts_customer_management_frontend:
-      type: cna-modeling.relationships.HostedOn.DeploymentMapping
-      properties:
-        deployment: automated-declarative
-        deployment_unit: Kubernetes.Resource.Deployment
-        replicas: 1
-        update_strategy: replace
-        automated_restart_policy: onProcessFailure
-        assigned_account: default-account
-        resource_requirements: unstated
-    google_kubernetes_engine_cluster_hosts_customer_core:
-      type: cna-modeling.relationships.HostedOn.DeploymentMapping
-      properties:
-        deployment: automated-declarative
-        deployment_unit: Kubernetes.Resource.Deployment
-        replicas: 1
-        update_strategy: replace
-        automated_restart_policy: onProcessFailure
-        assigned_account: default-account
-        resource_requirements: unstated
-    google_kubernetes_engine_cluster_hosts_customer_self_service_frontend:
+    google_kubernetes_engine_cluster_hosts_customer_self_service_backend:
       type: cna-modeling.relationships.HostedOn.DeploymentMapping
       properties:
         deployment: automated-declarative
@@ -3745,7 +3682,77 @@ service_template:
         automated_restart_policy: onProcessFailure
         assigned_account: default-account
         resource_requirements: unstated
-    google_kubernetes_engine_cluster_hosts_customer_self_service_backend:
+    google_kubernetes_engine_cluster_hosts_customer_self_service_frontend:
+      type: cna-modeling.relationships.HostedOn.DeploymentMapping
+      properties:
+        deployment: automated-declarative
+        deployment_unit: Kubernetes.Resource.Deployment
+        replicas: 1
+        update_strategy: replace
+        automated_restart_policy: onProcessFailure
+        assigned_account: default-account
+        resource_requirements: unstated
+    google_kubernetes_engine_cluster_hosts_customer_core:
+      type: cna-modeling.relationships.HostedOn.DeploymentMapping
+      properties:
+        deployment: automated-declarative
+        deployment_unit: Kubernetes.Resource.Deployment
+        replicas: 1
+        update_strategy: replace
+        automated_restart_policy: onProcessFailure
+        assigned_account: default-account
+        resource_requirements: unstated
+    google_kubernetes_engine_cluster_hosts_customer_management_frontend:
+      type: cna-modeling.relationships.HostedOn.DeploymentMapping
+      properties:
+        deployment: automated-declarative
+        deployment_unit: Kubernetes.Resource.Deployment
+        replicas: 1
+        update_strategy: replace
+        automated_restart_policy: onProcessFailure
+        assigned_account: default-account
+        resource_requirements: unstated
+    google_kubernetes_engine_cluster_hosts_risk_management_server:
+      type: cna-modeling.relationships.HostedOn.DeploymentMapping
+      properties:
+        deployment: automated-declarative
+        deployment_unit: Kubernetes.Resource.Deployment
+        replicas: 1
+        update_strategy: replace
+        automated_restart_policy: onProcessFailure
+        assigned_account: default-account
+        resource_requirements: unstated
+    google_kubernetes_engine_cluster_hosts_customer_management_backend:
+      type: cna-modeling.relationships.HostedOn.DeploymentMapping
+      properties:
+        deployment: automated-declarative
+        deployment_unit: Kubernetes.Resource.Deployment
+        replicas: 1
+        update_strategy: replace
+        automated_restart_policy: onProcessFailure
+        assigned_account: default-account
+        resource_requirements: unstated
+    google_kubernetes_engine_cluster_hosts_risk_management_client:
+      type: cna-modeling.relationships.HostedOn.DeploymentMapping
+      properties:
+        deployment: automated-declarative
+        deployment_unit: Kubernetes.Resource.Deployment
+        replicas: 1
+        update_strategy: replace
+        automated_restart_policy: onProcessFailure
+        assigned_account: default-account
+        resource_requirements: unstated
+    google_kubernetes_engine_cluster_hosts_policy_management_backend:
+      type: cna-modeling.relationships.HostedOn.DeploymentMapping
+      properties:
+        deployment: automated-declarative
+        deployment_unit: Kubernetes.Resource.Deployment
+        replicas: 1
+        update_strategy: replace
+        automated_restart_policy: onProcessFailure
+        assigned_account: default-account
+        resource_requirements: unstated
+    google_kubernetes_engine_cluster_hosts_policy_management_frontend:
       type: cna-modeling.relationships.HostedOn.DeploymentMapping
       properties:
         deployment: automated-declarative

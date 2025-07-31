@@ -467,7 +467,7 @@ service_template:
         position_xCoord: '740'
         position_yCoord: '367.14'
       properties:
-        managed: ''
+        managed: false
         software_type: custom
         stateless: false
         load_shedding: false
@@ -708,7 +708,7 @@ service_template:
         position_xCoord: '970'
         position_yCoord: '0'
       properties:
-        managed: ''
+        managed: false
         software_type: custom
         stateless: false
         load_shedding: false
@@ -798,7 +798,7 @@ service_template:
         position_xCoord: '820'
         position_yCoord: '820'
       properties:
-        managed: ''
+        managed: false
         software_type: custom
         stateless: true
         load_shedding: false
@@ -905,7 +905,7 @@ service_template:
         position_xCoord: '270'
         position_yCoord: '740'
       properties:
-        managed: ''
+        managed: false
         software_type: custom
         stateless: true
         load_shedding: false
@@ -1033,7 +1033,7 @@ service_template:
         position_xCoord: '100'
         position_yCoord: '90'
       properties:
-        managed: ''
+        managed: false
         software_type: custom
         stateless: true
         load_shedding: false
@@ -1260,7 +1260,7 @@ service_template:
         position_xCoord: '1210'
         position_yCoord: '370'
       properties:
-        managed: ''
+        managed: false
         software_type: custom
         stateless: true
         load_shedding: false
