@@ -300,7 +300,10 @@ service_template:
           - Kubernetes.Resource.Deployment
         availability_zone: us-east1-b,us-east1-c
         region: us-east1
-        supported_update_strategies: []
+        supported_update_strategies:
+          - replace
+          - rolling
+          - blue-green
         deployed_entities_scaling: automated-built-in
         self_scaling: manual
         enforced_resource_bounds: true
