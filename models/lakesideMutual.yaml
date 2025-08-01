@@ -1303,7 +1303,7 @@ service_template:
         position_yCoord: '10'
       properties:
         managed: false
-        software_type: custom
+        software_type: open-source
         stateless: true
         load_shedding: false
         identities: {}
